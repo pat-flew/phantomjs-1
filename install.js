@@ -23,9 +23,12 @@ var url = require('url')
 var util = require('util')
 var which = require('which')
 
-var cdnUrl = process.env.npm_config_phantomjs_cdnurl || process.env.PHANTOMJS_CDNURL ||  'https://bitbucket.org/ariya/phantomjs/downloads'
-var downloadUrl = cdnUrl + '/phantomjs-' + helper.version + '-'
+// original url:
+// https://bitbucket.org/ariya/phantomjs/downloads
 
+// always use environment var instead
+var cdnUrl = process.env.PHANTOMJS_CDNURL;
+var downloadUrl = cdnUrl + '/phantomjs-' + helper.version + '-'
 var originalPath = process.env.PATH
 
 // If the process exits without going through exit(), then we did not complete.
@@ -121,17 +124,10 @@ whichDeferred.promise
     var fileName = downloadUrl.split('/').pop()
     var downloadedFile = path.join(tmpPath, fileName)
 
-    console.log('** always download');
+    console.log('Downloading', downloadUrl)
+    console.log('Saving to', downloadedFile)
 
-    // Start the install.
-   // if (!fs.existsSync(downloadedFile)) {
-      console.log('Downloading', downloadUrl)
-      console.log('Saving to', downloadedFile)
-      return requestBinary(getRequestOptions(conf), downloadedFile)
-   // } else {
-   //   console.log('Download already available at', downloadedFile)
-   //   return downloadedFile
-   // }
+    return requestBinary(getRequestOptions(conf), downloadedFile)
   })
   .then(function (downloadedFile) {
     return extractDownload(downloadedFile)
