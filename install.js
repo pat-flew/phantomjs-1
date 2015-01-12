@@ -121,15 +121,17 @@ whichDeferred.promise
     var fileName = downloadUrl.split('/').pop()
     var downloadedFile = path.join(tmpPath, fileName)
 
+    console.log('** always download');
+
     // Start the install.
-    if (!fs.existsSync(downloadedFile)) {
+   // if (!fs.existsSync(downloadedFile)) {
       console.log('Downloading', downloadUrl)
       console.log('Saving to', downloadedFile)
       return requestBinary(getRequestOptions(conf), downloadedFile)
-    } else {
-      console.log('Download already available at', downloadedFile)
-      return downloadedFile
-    }
+   // } else {
+   //   console.log('Download already available at', downloadedFile)
+   //   return downloadedFile
+   // }
   })
   .then(function (downloadedFile) {
     return extractDownload(downloadedFile)
